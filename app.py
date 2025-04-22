@@ -1,19 +1,14 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS
 import pickle
 import numpy as np
-import os
+from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)
+CORS(app)  # Allow React Native to access API
 
-# Load model
-with open("model2.pkl", "rb") as f:
+# Load the trained model
+with open('model2.pkl', 'rb') as f:
     model = pickle.load(f)
-
-@app.route('/')
-def home():
-    return "Welcome to the prediction API!"
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -26,5 +21,4 @@ def predict():
         return jsonify({'error': str(e)}), 400
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port)
+    app.run(host='0.0.0.0', port=5000, debug=True)  # Accessible from mobile
