@@ -9,6 +9,12 @@ CORS(app)  # Allow React Native to access API
 # Load the trained model
 import joblib
 model = joblib.load("model.pkl")
+@app.route('/')
+def home():
+    return 'Your Server is Online'
+
+
+
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
